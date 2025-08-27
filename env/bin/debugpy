@@ -1,7 +1,0 @@
-#!/Users/rothpitoupoeung/Documents/A_SWIN_Y2_S2/COS30018-Intelligent_Systems/COS30018-Intelligent-Systems-Team-Project-Option-B/env/bin/python
-import sys
-from debugpy.server.cli import main
-if __name__ == '__main__':
-    if sys.argv[0].endswith('.exe'):
-        sys.argv[0] = sys.argv[0][:-4]
-    sys.exit(main())
