@@ -1,0 +1,59 @@
+/* CSS FOR MAIN HNRS */
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f8f8;
+    padding: 20px;
+}
+/* spacing out header */
+header{ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+hr{
+    border: 2px solid black;
+    margin: 10px 0;
+}
+/* grid-template-columns will likely change */
+.main-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+.controls{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* https://louisem.com/421408/gray-hex-codes */
+.controls button,
+.controls select,
+.controls input{
+    padding: 10px;
+    background-color:#D9DDDC;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.result-box{
+    border: 1px solid #808588;
+    padding: 10px;
+    background-color: white;
+}
+.draw-box{
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.visualisation-box{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #808588;
+    margin-bottom: 10px;
+}

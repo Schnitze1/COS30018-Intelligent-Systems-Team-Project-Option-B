@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="UTF-8">
+		<title> COS30018 Intelligent Systems - Handwritten Number Recognition System</title>
+		<script src=""></script>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+	<body>
+		<header>
+			<h2>COS30018 Intelligent Systems</h2>
+			<h2>Handwritten Number Recognition System</h2>
+		</header>
+		<hr>
+
+		<main>
+			<div class="main-container">
+				<!-- control section -->
+				<form method="POST">
+					<aside class="controls">
+						<button name="action" value="undo" type="submit">Undo</button>
+						<button name="action" value="clear" type="submit">Clear</button>
+						<!-- <p>Upload: </p>
+						<input id="fileupload" type="file"> -->
+						<button name="action" value="upload" type="">Upload</button>
+						<!-- this hides the default button to match the GUI design but may change -->
+						<!-- <input id="fileupload" type="file" hidden>
+						<label for="fileupload" class="btn">Upload</label> -->
+						<div class="model-selection">
+							<select>
+								<option value="" disabled selected>Select model</option>
+								<option value="model1">CNN</option>
+								<option value="model2">FNN</option>
+								<option value="model3">MLP</option>
+							</select>
+						</div>
+						<!-- TODO implement feature to only type in numbers in a range (e.g. 100-60000) -->
+						<input type="number" id="parameters" placeholder="[parameters]" min="100" max="60000">
+						<button type="submit" class="predict">Predict</button>
+					</aside>
+			</form>
+
+				<!-- drawing section -->
+				<!-- TODO will add drawing function later on -->
+				<section class="draw-box">
+					<canvas id="canvas" width="300" height="300"></canvas>
+				</section>
+
+				<!-- result section -->
+				<section class="result-box">
+					<!-- may incorporate d3 -->
+					<div class="visualisation-box">
+						<p>[visualisation here]</p>
+					</div>
+					<div class="prediction-box">
+						<p><strong>Result:</strong></p>
+					</div>
+				</section>
+				
+			</div>
+	
+			<!-- <div class="section">
+				<h2>Control Panel</h2>
+				<h3>Test functions</h3>
+				<a href="/action1">function1</a>
+				<a href="/action2">function2</a>
+			</div> -->
+		</main>
+	</body>
+	<footer>
+		<!-- for JS libraries and files (if required) -->
+		<script></script>
+	</footer>
+</html>
+
