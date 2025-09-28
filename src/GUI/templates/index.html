@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COS30018 Intelligent Systems - Handwritten Number Recognition</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="author" content ="Timothy Schnabel 105334128">
+  <meta name="description" content ="COS30018 Intelligent Systems Assignment: Handwritten Number Recognition">
+</head>
+<body>
+
+<header class="SiteHeader_core">
+  <div class="SiteHeader_wrapper">
+    <h2>COS30018 Intelligent Systems</h2>
+    <h2>Handwritten Number Recognition System</h2>
+  </div>
+</header>
+
+
+<main>
+  <div class="main-container">
+    <aside class="controls">
+      <form method="POST" enctype="multipart/form-data">
+        <label for="image">Upload an image (multi-digit supported):</label>
+        <input id="image" name="image" type="file" accept="image/*" required />
+
+        <div style="margin-top:12px;">
+          <label>Select model (per-request):</label>
+          <select name="model_choice">
+            <option value="ensemble" {% if settings.model_choice == 'ensemble' %}selected{% endif %}>All Models (CNN/SEQ/FNN)</option>
+            <option value="cnn" {% if settings.model_choice == 'cnn' %}selected{% endif %}>CNN</option>
+            <option value="seq" {% if settings.model_choice == 'seq' %}selected{% endif %}>Sequential</option>
+            <option value="fnn" {% if settings.model_choice == 'fnn' %}selected{% endif %}>FNN</option>
+          </select>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button type="submit">Run</button>
+          <button type="reset">Clear</button>
+        </div>
+      </form>
+
+      <form method="POST">
+        <input type="hidden" name="action" value="save_params" />
+        <h4>Hyper-parameters</h4>
+
+        <h5>CNN</h5>
+        epochs: <input type="number" name="cnn_epochs" value="{{ settings.cnn.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="cnn_lr" value="{{ settings.cnn.learning_rate }}" /> <br>
+        batch: <input type="number" name="cnn_bs" value="{{ settings.cnn.batch_size }}" min="1" />
+
+        <h5>SEQ</h5>
+        epochs: <input type="number" name="seq_epochs" value="{{ settings.seq.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="seq_lr" value="{{ settings.seq.learning_rate }}" /> <br>
+        batch: <input type="number" name="seq_bs" value="{{ settings.seq.batch_size }}" min="1" />
+
+        <h5>FNN</h5>
+        epochs: <input type="number" name="fnn_epochs" value="{{ settings.fnn.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="fnn_lr" value="{{ settings.fnn.learning_rate }}" /> <br>
+        batch: <input type="number" name="fnn_bs" value="{{ settings.fnn.batch_size }}" min="1" />
+
+        <div style="margin-top:8px;">
+          <button type="submit">Re-Train with Custom Parameters</button>
+        </div>
+      </form>
+    </aside>
+
+    <!-- drawing / image preview section -->
+    <section class="draw-box">
+      {% if overlay_url %}
+      <img src="{{ overlay_url }}" alt="overlay" style="max-width:100%; height:auto; border:1px solid #ccc;" />
+      {% else %}
+      <canvas id="canvas" width="300" height="300"></canvas>
+      {% endif %}
+    </section>
+
+    <!-- result section -->
+    <section class="result-box">
+      <img src="{{ url_for('static', filename='cm_mnist.png') }}"
+           alt="overlay"
+           style="max-width:50%; height:auto; border:1px solid #ccc;" />
+
+
+
+      <div class="prediction-box">
+        <p><strong>Predictions</strong></p>
+        {% if predictions %}
+        <table style="width:100%; border-collapse: collapse;">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>CNN (label / conf)</th>
+            <th>SEQ (label / conf)</th>
+            <th>FNN (label / conf)</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for pred in predictions %}
+          <tr>
+            <td style="text-align:center">{{ loop.index0 }}</td>
+            <td>{{ pred.cnn.label if pred.cnn else "-" }} / {{ ('{:.2f}'.format(pred.cnn.conf) if pred.cnn and pred.cnn.conf is not none else '-') }}</td>
+            <td>{{ pred.seq.label if pred.seq else "-" }} / {{ ('{:.2f}'.format(pred.seq.conf) if pred.seq and pred.seq.conf is not none else '-') }}</td>
+            <td>{{ pred.fnn.label if pred.fnn else "-" }} / {{ ('{:.2f}'.format(pred.fnn.conf) if pred.fnn and pred.fnn.conf is not none else '-') }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No predictions yet. Upload an image and click Run.</p>
+        {% endif %}
+      </div>
+    </section>
+
+  </div>
+</main>
+</body>
+</html>
