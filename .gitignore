@@ -1,0 +1,37 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+.ipynb_checkpoints/
+
+# --- macOS / editors ---
+.DS_Store
+.vscode/
+.idea/
+__pycache__/
+*.py[cod]
+
+# --- Secrets / env files ---
+.env
+*.env
+.temp
+
+# --- Virtual environments---
+.venv/
+venv/
+env/
+ENV/
+*/.venv/
+*/venv/
+*/env/
+temp/
+*/temp/
+*/.temp/
+
+# --- any models ---
+*.keras
+*.h5
+*.pkl
+*.npz
+*.npy
